@@ -1,4 +1,6 @@
-*, *::before, *::after {
+*,
+*::before,
+*::after {
   box-sizing: border-box;
 }
 
@@ -10,8 +12,8 @@ body {
 .calculator-grid {
   display: grid;
   margin-top: 2rem;
-  grid-template-columns: repeat(4, 6rem) ;
-  grid-template-rows:minmax(7rem, auto) repeat(5, 6rem) ;
+  grid-template-columns: repeat(4, 6rem);
+  grid-template-rows: minmax(7rem, auto) repeat(5, 6rem);
 }
 
 .span-two {
@@ -20,14 +22,14 @@ body {
 
 .output {
   grid-column: 1 / -1;
-  background-color: rgba(0, 0, 0, .75);
+  background-color: rgba(0, 0, 0, 0.75);
   display: flex;
 }
 
-.output .previous-operand{
-  color: rgba(255,255,255, .75);
+.output .previous-operand {
+  color: rgba(255, 255, 255, 0.75);
 }
 
 .output .current-operand {
-  color: rgba(255, 255, 255, .75);
+  color: rgba(255, 255, 255, 0.75);
 }
