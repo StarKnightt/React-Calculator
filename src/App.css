@@ -1,57 +1,134 @@
-*,
-*::before,
-*::after {
+/* Import Roboto font for a modern look */
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
+
+/* Global box-sizing and reset */
+*, *::before, *::after {
   box-sizing: border-box;
 }
 
+/* Body styling */
 body {
   margin: 0;
-  background: linear-gradient(to right, #cb1cd1, #cf3c0f);
+  font-family: 'Roboto', sans-serif;
+  display: flex;
+  background: linear-gradient(to right, #ffffff, #f5f5f5); /* White color gradient */
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh; /* Use min-height for better mobile compatibility */
+  padding: 1rem; /* Add padding to prevent calculator from touching screen edges */
 }
 
+/* Calculator grid styling */
 .calculator-grid {
   display: grid;
-  margin-top: 2rem;
   justify-content: center;
-  grid-template-columns: repeat(4, 6rem);
-  grid-template-rows: minmax(7rem, auto) repeat(5, 6rem);
+  grid-template-columns: repeat(4, 1fr); /* Use fractional units for flexible columns */
+  grid-template-rows: minmax(7rem, auto) repeat(5, 1fr);
+  gap: 0.5rem;
+  padding: 1rem;
+  border-radius: 20px; /* Softer look with larger border radius */
+  box-shadow: 12px 12px 24px rgba(255, 255, 255, 0.8), -12px -12px 24px rgba(68, 66, 66, 0.2); /* Neuromorphic shadow */
+  background: #ecf0f3; /* Light background for neuromorphism */
+  max-width: 400px; /* Set maximum width */
+  width: 100%; /* Allow calculator to shrink on smaller screens */
 }
 
+/* Calculator button styling */
 .calculator-grid > button {
   cursor: pointer;
-  font-size: 2rem;
-  border: 1px solid white;
+  font-size: clamp(1.5rem, 4vw, 2rem); /* Responsive font size */
+  border: none;
   outline: none;
-  background-color: rgba(255, 255, 255, .75);
+  background-color: #ecf0f3;
+  border-radius: 10px;
+  box-shadow: 5px 5px 10px #cbced1, -5px -5px 10px #ffffff; /* Neuromorphic shadows */
+  transition: background-color 0.2s, transform 0.2s, box-shadow 0.2s;
+  padding: 0.5em;
 }
 
+/* Button hover and focus effects */
 .calculator-grid > button:hover,
 .calculator-grid > button:focus {
-  background-color: rgba(255, 255, 255, .9);
+  background-color: #e0e0e0; /* Slightly darker for hover */
+  transform: translateY(-2px);
+  box-shadow: 2px 2px 5px #cbced1, -2px -2px 5px #ffffff; /* Smaller shadows on hover */
 }
 
+/* Styling for buttons that span two columns */
 .span-two {
   grid-column: span 2;
 }
 
+/* Output display styling */
 .output {
   grid-column: 1 / -1;
-  background-color: rgba(0, 0, 0, 0.75);
+  background-color: #ecf0f3;
   display: flex;
   flex-direction: column;
   align-items: flex-end;
   justify-content: space-around;
-  padding: .75rem;
+  padding: 0.75rem;
   word-wrap: break-word;
   word-break: break-all;
+  border-radius: 10px;
+  box-shadow: inset 8px 8px 16px #cbced1, inset -8px -8px 16px #ffffff;
 }
 
+/* Previous operand styling */
 .output .previous-operand {
-  color: rgba(255, 255, 255, 0.75);
-  font-size: 1.5rem;
+  color: #a3a3a3; /* Keeping this gray for contrast */
+  font-size: clamp(1rem, 3vw, 1.5rem);
 }
 
+/* Current operand styling */
 .output .current-operand {
-  color: rgba(255, 255, 255, 0.75);
-  font-size: 2.5rem;
+  color: #e43505; /* Green color for current operand */
+  font-size: clamp(1.5rem, 5vw, 2.5rem);
+}
+
+/* Media query for small screens */
+@media (max-width: 480px) {
+  .calculator-grid {
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0.3rem;
+    padding: 0.5rem;
+  }
+
+  .calculator-grid > button {
+    padding: 0.3em;
+  }
+
+  .output {
+    padding: 0.5rem;
+  }
+}
+
+/* Default button color */
+.calculator-grid > button {
+  color: #333; /* Dark gray for most buttons */
+}
+
+/* Division operation */
+.calculator-grid > button:nth-child(4) {
+  color: #0000FF; /* Blue for division (/) */
+}
+
+/* Multiplication operation */
+.calculator-grid > button:nth-child(8) {
+  color: #FF0000; /* Red for multiplication (*) */
+}
+
+/* Addition operation */
+.calculator-grid > button:nth-child(12) {
+  color: #008000; /* Green for addition (+) */
+}
+
+/* Subtraction operation */
+.calculator-grid > button:nth-child(16) {
+  color: #FFA500; /* Orange for subtraction (-) */
+}
+
+/* Equals operation */
+.calculator-grid > button:last-child {
+  color: #800080; /* Purple for equals (=) */
 }
