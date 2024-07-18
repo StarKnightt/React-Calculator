@@ -8,3 +8,8 @@ export default function OperationButton({ dispatch, operation }) {
     </button>
   );
 }
+
+// Key Points in Comments:
+
+//     Component Purpose: Added a comment explaining the purpose of the OperationButton component.
+//     Dispatch Action: Clarified what happens when the button is clicked (i.e., dispatching the CHOOSE_OPERATION action).
