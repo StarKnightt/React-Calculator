@@ -194,6 +194,11 @@ function App() {
           =
         </button>
       </div>
+      <footer className="calculator-footer">
+        <a href="https://github.com/StarKnightt/React-Calculator" target="_blank" rel="noopener noreferrer">
+          View on GitHub
+        </a>
+      </footer>
     </>
   );
 }
