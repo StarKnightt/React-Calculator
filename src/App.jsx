@@ -1,14 +1,14 @@
-import './App.css';
-import React, { useReducer, useEffect } from 'react';
-import DigitButton from './DigitButton.jsx';
-import OperationButton from './OperationButton.jsx';
+import "./App.css";
+import React, { useReducer, useEffect } from "react";
+import DigitButton from "./DigitButton.jsx";
+import OperationButton from "./OperationButton.jsx";
 
 export const ACTIONS = {
-  ADD_DIGIT: 'add-digit',
-  CHOOSE_OPERATION: 'choose-operation',
-  CLEAR: 'clear',
-  DELETE_DIGIT: 'delete-digit',
-  EVALUATE: 'evaluate'
+  ADD_DIGIT: "add-digit",
+  CHOOSE_OPERATION: "choose-operation",
+  CLEAR: "clear",
+  DELETE_DIGIT: "delete-digit",
+  EVALUATE: "evaluate",
 };
 
 function reducer(state, { type, payload }) {
@@ -21,15 +21,15 @@ function reducer(state, { type, payload }) {
           overwrite: false,
         };
       }
-      if (payload.digit === '0' && state.currentOperand === '0') {
+      if (payload.digit === "0" && state.currentOperand === "0") {
         return state;
       }
-      if (payload.digit === '.' && state.currentOperand?.includes('.')) {
+      if (payload.digit === "." && state.currentOperand?.includes(".")) {
         return state;
       }
       return {
         ...state,
-        currentOperand: `${state.currentOperand || ''}${payload.digit}`
+        currentOperand: `${state.currentOperand || ""}${payload.digit}`,
       };
 
     case ACTIONS.CHOOSE_OPERATION:
@@ -47,14 +47,14 @@ function reducer(state, { type, payload }) {
           ...state,
           operation: payload.operation,
           previousOperand: state.currentOperand,
-          currentOperand: null
+          currentOperand: null,
         };
       }
       return {
         ...state,
         previousOperand: evaluate(state),
         operation: payload.operation,
-        currentOperand: null
+        currentOperand: null,
       };
 
     case ACTIONS.CLEAR:
@@ -65,7 +65,7 @@ function reducer(state, { type, payload }) {
         return {
           ...state,
           overwrite: false,
-          currentOperand: null
+          currentOperand: null,
         };
       }
       if (state.currentOperand == null) return state;
@@ -74,7 +74,7 @@ function reducer(state, { type, payload }) {
       }
       return {
         ...state,
-        currentOperand: state.currentOperand.slice(0, -1)
+        currentOperand: state.currentOperand.slice(0, -1),
       };
 
     case ACTIONS.EVALUATE:
@@ -90,7 +90,7 @@ function reducer(state, { type, payload }) {
         overwrite: true,
         previousOperand: null,
         operation: null,
-        currentOperand: evaluate(state)
+        currentOperand: evaluate(state),
       };
 
     default:
@@ -101,23 +101,23 @@ function reducer(state, { type, payload }) {
 function evaluate({ currentOperand, previousOperand, operation }) {
   const prev = parseFloat(previousOperand);
   const current = parseFloat(currentOperand);
-  if (isNaN(prev) || isNaN(current)) return '';
-  let computation = '';
+  if (isNaN(prev) || isNaN(current)) return "";
+  let computation = "";
   switch (operation) {
-    case '+':
+    case "+":
       computation = prev + current;
       break;
-    case '-':
+    case "-":
       computation = prev - current;
       break;
-    case '*':
+    case "*":
       computation = prev * current;
       break;
-    case '/':
+    case "/":
       computation = prev / current;
       break;
     default:
-      return '';
+      return "";
   }
   return computation.toString();
 }
@@ -128,20 +128,23 @@ const INTEGER_FORMATTER = new Intl.NumberFormat("en-us", {
 
 function formatOperand(operand) {
   if (operand == null) return;
-  const [integer, decimal] = operand.split('.');
+  const [integer, decimal] = operand.split(".");
   if (decimal == null) return INTEGER_FORMATTER.format(integer);
   return `${INTEGER_FORMATTER.format(integer)}.${decimal}`;
 }
 
 function App() {
-  const [{ currentOperand, previousOperand, operation }, dispatch] = useReducer(reducer, {});
+  const [{ currentOperand, previousOperand, operation }, dispatch] = useReducer(
+    reducer,
+    {}
+  );
 
   useEffect(() => {
     const handleKeyDown = (event) => handleKeyPress(event, dispatch);
-    window.addEventListener('keydown', handleKeyDown);
+    window.addEventListener("keydown", handleKeyDown);
 
     return () => {
-      window.removeEventListener('keydown', handleKeyDown);
+      window.removeEventListener("keydown", handleKeyDown);
     };
   }, [dispatch]);
 
@@ -186,7 +189,11 @@ function App() {
         </button>
       </div>
       <footer className="calculator-footer">
-        <a href="https://github.com/StarKnightt/React-Calculator" target="_blank" rel="noopener noreferrer">
+        <a
+          href="https://github.com/StarKnightt/React-Calculator"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
           View on GitHub
         </a>
       </footer>
@@ -199,16 +206,16 @@ function handleKeyPress(event, dispatch) {
 
   if (!isNaN(key)) {
     dispatch({ type: ACTIONS.ADD_DIGIT, payload: { digit: key } });
-  } else if (key === '.') {
+  } else if (key === ".") {
     dispatch({ type: ACTIONS.ADD_DIGIT, payload: { digit: key } });
-  } else if (key === '+' || key === '-' || key === '*' || key === '/') {
+  } else if (key === "+" || key === "-" || key === "*" || key === "/") {
     dispatch({ type: ACTIONS.CHOOSE_OPERATION, payload: { operation: key } });
-  } else if (key === 'Enter' || key === '=') {
+  } else if (key === "Enter" || key === "=") {
     event.preventDefault();
     dispatch({ type: ACTIONS.EVALUATE });
-  } else if (key === 'Backspace') {
+  } else if (key === "Backspace") {
     dispatch({ type: ACTIONS.DELETE_DIGIT });
-  } else if (key.toLowerCase() === 'c') {
+  } else if (key.toLowerCase() === "c") {
     dispatch({ type: ACTIONS.CLEAR });
   }
 }
